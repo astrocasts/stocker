@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Astrocasts\Stocker\Model\Catalog;
 
-use Astrocasts\Stocker\Model\Common\EventSourcing\AggregateRoot;
-use Astrocasts\Stocker\Model\Common\EventSourcing\Event;
+use Astrocasts\Stocker\EventSourcing\AggregateRoot;
+use Astrocasts\Stocker\EventSourcing\Event;
 use Astrocasts\Stocker\Model\Catalog\Events\ItemCreated;
 
 final class Item extends AggregateRoot

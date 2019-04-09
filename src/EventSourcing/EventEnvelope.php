@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Astrocasts\Stocker\Model\Common\EventSourcing;
+namespace Astrocasts\Stocker\EventSourcing;
 
 use Prooph\EventStoreClient\EventId;
 
