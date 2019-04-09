@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Astrocasts\Stocker\Domain\Model\Catalog;
+namespace Tests\Unit\Model\Catalog;
 
-use Astrocasts\Stocker\Domain\Model\Catalog\ItemId;
+use Astrocasts\Stocker\Model\Catalog\ItemId;
 use NaiveSerializer\JsonSerializer;
 use Tests\TestCase;
 

@@ -38,7 +38,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Astrocasts\\Stocker\\": "src/Astrocasts/Stocker"
+            "Astrocasts\\Stocker\\": "src"
         },
         "classmap": [
             "database/seeds",

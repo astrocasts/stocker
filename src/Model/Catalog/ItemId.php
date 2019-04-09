@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Astrocasts\Stocker\Domain\Model\Catalog;
+namespace Astrocasts\Stocker\Model\Catalog;
 
 final class ItemId
 {

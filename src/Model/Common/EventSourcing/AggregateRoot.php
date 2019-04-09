@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Astrocasts\Stocker\Domain\Model\Common\EventSourcing;
+namespace Astrocasts\Stocker\Model\Common\EventSourcing;
 
 use Prooph\EventStoreClient\ExpectedVersion;
 
