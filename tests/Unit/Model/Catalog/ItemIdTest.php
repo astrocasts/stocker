@@ -50,7 +50,6 @@ class ItemIdTest extends TestCase
         /** @var ItemId $itemId */
         $itemId = $serializer->deserialize(ItemId::class, $data);
 
-        $this->assertEquals('D5550FB7-3823-4A31-99FF-21F0A67B9410', $itemId->toString());
         $this->assertEquals('D5550FB7-3823-4A31-99FF-21F0A67B9410', (string) $itemId);
     }
 }

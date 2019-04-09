@@ -26,11 +26,6 @@ final class ItemId
         $this->uuid = $itemId;
     }
 
-    public function toString(): string
-    {
-        return $this->uuid;
-    }
-
     public function __toString(): string
     {
         return $this->uuid;
@@ -38,6 +33,6 @@ final class ItemId
 
     public function equals(ItemId $other): bool
     {
-        return $this->uuid == $other->uuid;
+        return $this->uuid === $other->uuid;
     }
 }

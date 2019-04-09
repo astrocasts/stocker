@@ -17,7 +17,7 @@ final class Item extends AggregateRoot
 
     public function aggregateId(): string
     {
-        return $this->itemId->toString();
+        return (string) $this->itemId;
     }
 
     public static function create(ItemId $itemId): Item
