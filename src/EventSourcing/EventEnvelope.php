@@ -23,12 +23,18 @@ final class EventEnvelope
      */
     private $event;
 
-    public static function fromEvent(Event $event): EventEnvelope
+    /**
+     * @var int
+     */
+    private $version;
+
+    public static function fromEvent(Event $event, int $version): EventEnvelope
     {
         $instance = new static();
         $instance->eventId = EventId::generate();
         $instance->eventType = get_class($event);
         $instance->event = $event;
+        $instance->version = $version;
 
         return $instance;
     }
@@ -46,5 +52,10 @@ final class EventEnvelope
     public function event(): Event
     {
         return $this->event;
+    }
+
+    public function version(): int
+    {
+        return $this->version;
     }
 }

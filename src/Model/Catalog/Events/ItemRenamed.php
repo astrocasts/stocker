@@ -8,7 +8,7 @@ use Astrocasts\Stocker\Model\Catalog\ItemId;
 use Astrocasts\Stocker\EventSourcing\Event;
 use Astrocasts\Stocker\Model\Catalog\Name;
 
-final class ItemCreated implements Event
+class ItemRenamed implements Event
 {
     /**
      * @var ItemId

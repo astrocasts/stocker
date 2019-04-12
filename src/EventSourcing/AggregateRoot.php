@@ -11,11 +11,6 @@ abstract class AggregateRoot
     /** @var int */
     protected $expectedVersion = ExpectedVersion::EMPTY_STREAM;
 
-    /**
-     * List of events that are not committed to the EventStore
-     *
-     * @var EventEnvelope[]
-     */
     protected $recordedEvents = [];
 
     protected function __construct()
@@ -32,11 +27,6 @@ abstract class AggregateRoot
         $this->expectedVersion = $version;
     }
 
-    /**
-     * Get pending events and reset stack
-     *
-     * @return EventEnvelope[]
-     */
     public function popRecordedEvents(): array
     {
         $pendingEvents = $this->recordedEvents;
@@ -46,12 +36,12 @@ abstract class AggregateRoot
         return $pendingEvents;
     }
 
-    /**
-     * Record an aggregate changed event
-     */
     protected function recordThat(Event $event): void
     {
-        $this->recordedEvents[] = EventEnvelope::fromEvent($event);
+        $this->recordedEvents[] = EventEnvelope::fromEvent(
+            $event,
+            ++$this->expectedVersion
+        );
 
         $this->apply($event);
     }
@@ -64,11 +54,6 @@ abstract class AggregateRoot
         return $instance;
     }
 
-    /**
-     * Replay past events
-     *
-     * @param EventEnvelope[]
-     */
     public function replay(array $historyEvents): void
     {
         foreach ($historyEvents as $pastEvent) {
