@@ -60,7 +60,7 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function it_does_not_rename_the_same_name_again()
+    public function it_does_not_rename_if_it_already_has_that_name()
     {
         $itemId = ItemId::fromString('CC778ECD-DD97-43D0-9D00-3C1010415949');
         $name = Name::fromString('elephpant');
@@ -85,7 +85,7 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function it_can_remember_its_name()
+    public function it_can_remember_when_its_renamed()
     {
         $itemId = ItemId::fromString('CC778ECD-DD97-43D0-9D00-3C1010415949');
         $name = Name::fromString('elephpant');
