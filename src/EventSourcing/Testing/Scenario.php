@@ -40,13 +40,6 @@ class Scenario
         $this->aggregateId = $aggregateId;
     }
 
-    public function withAggregateId(string $aggregateId): self
-    {
-        $this->aggregateId = $aggregateId;
-
-        return $this;
-    }
-
     public function given(?array $givens): self
     {
         if (null === $givens) {

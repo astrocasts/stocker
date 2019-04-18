@@ -40,11 +40,11 @@ class ItemTest extends TestCase
 
         $scenario = new Scenario(
             $this,
-            Item::class
+            Item::class,
+            (string) $itemId
         );
 
         $scenario
-            ->withAggregateId((string) $itemId)
             ->given([
                 new ItemCreated($itemId, $name),
             ])
@@ -67,11 +67,11 @@ class ItemTest extends TestCase
 
         $scenario = new Scenario(
             $this,
-            Item::class
+            Item::class,
+            (string) $itemId
         );
 
         $scenario
-            ->withAggregateId((string) $itemId)
             ->given([
                 new ItemCreated($itemId, $name),
             ])
@@ -93,11 +93,11 @@ class ItemTest extends TestCase
 
         $scenario = new Scenario(
             $this,
-            Item::class
+            Item::class,
+            (string) $itemId
         );
 
         $scenario
-            ->withAggregateId((string) $itemId)
             ->given([
                 new ItemCreated($itemId, $name),
                 new ItemRenamed($itemId, $newName),

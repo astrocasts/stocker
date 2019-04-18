@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Astrocasts\Stocker\Model\Catalog;
 
-class Name
+use Astrocasts\Stocker\Serialization\CollapseToSingleValue;
+
+class Name implements CollapseToSingleValue
 {
     /**
      * @var string
