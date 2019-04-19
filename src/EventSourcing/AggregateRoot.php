@@ -11,6 +11,9 @@ abstract class AggregateRoot
     /** @var int */
     protected $expectedVersion = ExpectedVersion::EMPTY_STREAM;
 
+    /** @var int */
+    protected $playhead = ExpectedVersion::EMPTY_STREAM;
+
     protected $recordedEvents = [];
 
     protected function __construct()
@@ -25,6 +28,7 @@ abstract class AggregateRoot
     public function setExpectedVersion(int $version): void
     {
         $this->expectedVersion = $version;
+        $this->playhead = $version;
     }
 
     public function popRecordedEvents(): array
@@ -40,7 +44,7 @@ abstract class AggregateRoot
     {
         $this->recordedEvents[] = EventEnvelope::fromEvent(
             $event,
-            ++$this->expectedVersion
+            ++$this->playhead
         );
 
         $this->apply($event);

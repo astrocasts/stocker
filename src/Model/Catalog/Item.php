@@ -26,6 +26,11 @@ final class Item extends AggregateRoot
         return (string) $this->itemId;
     }
 
+    public function name(): Name
+    {
+        return $this->name;
+    }
+
     public static function create(ItemId $itemId, Name $name): Item
     {
         $instance = new static();

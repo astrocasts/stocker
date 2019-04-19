@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Astrocasts\Stocker\Infrastructure\Persistence\EventStore\CatalogEventStoreRepository;
 use Astrocasts\Stocker\Model\Catalog\Catalog;
+use Astrocasts\Stocker\Model\Catalog\Item;
 use Illuminate\Support\ServiceProvider;
 use Prooph\EventStoreClient\ConnectionSettingsBuilder;
 use Prooph\EventStoreClient\EndPoint;
@@ -21,9 +22,17 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         app()->bind(Catalog::class, CatalogEventStoreRepository::class);
-        app()->bind(EventStoreConnection::class, function () {
+        app()->singleton(EventStoreConnection::class, function () {
+            $builder = new ConnectionSettingsBuilder();
+            //$builder->enableVerboseLogging();
+            $builder->useConsoleLogger();
+            //$builder->useSslConnection('127.0.0.1', false);
+            //$builder->performOnAnyNode();
+            $builder->setDefaultUserCredentials(new UserCredentials('astrocasts', 'password'));
+
             return EventStoreConnectionFactory::createFromEndPoint(
-                new EndPoint('localhost', 2113)
+                new EndPoint('127.0.0.1', 1113),
+                $builder->build()
             );
         });
 
@@ -32,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
             ->give('catalog');
         app()->when(CatalogEventStoreRepository::class)
             ->needs('$aggregateRootClassName')
-            ->give(Catalog::class);
+            ->give(Item::class);
     }
 
     /**

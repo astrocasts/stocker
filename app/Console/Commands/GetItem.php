@@ -6,28 +6,25 @@ use Amp\Loop;
 use Astrocasts\Stocker\Model\Catalog\Catalog;
 use Astrocasts\Stocker\Model\Catalog\Item;
 use Astrocasts\Stocker\Model\Catalog\ItemId;
-use Astrocasts\Stocker\Model\Catalog\Name;
 use Illuminate\Console\Command;
 use Prooph\EventStoreClient\EventStoreConnection;
-use Prooph\EventStoreClient\Position;
-use Prooph\EventStoreClient\UserCredentials;
 
-class MakeItem extends Command
+class GetItem extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:make-item {name}';
+    protected $signature = 'app:get-item {item_id}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Make an item';
-    /** @var Catalog */
+    protected $description = 'Get item';
+
 
     private $catalog;
 
@@ -58,15 +55,15 @@ class MakeItem extends Command
 
             yield $connection->connectAsync();
 
-            $itemId = ItemId::generate();
-            $name = Name::fromString($this->argument('name'));
-            $item = Item::create($itemId, $name);
+            /** @var Item $item */
+            $item = yield $this->catalog->getItem(ItemId::fromString($this->argument('item_id')));
 
-            $this->info('ItemId: ' . $itemId);
-
-            yield $this->catalog->saveItem($item);
-
-            $this->info('Saved.');
+            if ($item) {
+                $this->info('ItemId: ' . $item->aggregateId());
+                $this->line('Name: ' . $item->name());
+            } else {
+                $this->warn('Item not found');
+            }
 
             Loop::stop();
         });

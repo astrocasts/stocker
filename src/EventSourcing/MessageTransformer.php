@@ -39,6 +39,13 @@ class MessageTransformer
 
     public function toDomainEvent(ResolvedEvent $eventData): EventEnvelope
     {
+        return EventEnvelope::fromEvent(
+            $this->serializer->deserialize(
+                self::resolveFromContractName($eventData->event()->eventType()),
+                $eventData->event()->data()
+            ),
+            $eventData->originalEventNumber()
+        );
         /*
         $event = $eventEnvelope->event();
         $eventType = static::resolveFromClassName(get_class($event));
