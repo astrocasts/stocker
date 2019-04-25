@@ -46,16 +46,6 @@ class MessageTransformer
             ),
             $eventData->originalEventNumber()
         );
-        /*
-        $event = $eventEnvelope->event();
-        $eventType = static::resolveFromClassName(get_class($event));
-
-        $payload = Json::decode($event->data());
-
-        $class = $this->map[$eventType];
-
-        return $class::from($event->eventId(), $payload);
-        */
     }
 
     private static function resolveFromContractName(string $contractName): string
