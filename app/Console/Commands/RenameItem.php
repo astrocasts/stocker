@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+
 use Amp\Loop;
 use Astrocasts\Stocker\Model\Catalog\Catalog;
 use Astrocasts\Stocker\Model\Catalog\Item;
@@ -10,21 +11,21 @@ use Astrocasts\Stocker\Model\Catalog\Name;
 use Illuminate\Console\Command;
 use Prooph\EventStoreClient\EventStoreConnection;
 
-class MakeItem extends Command
+class RenameItem extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:make-item {name}';
+    protected $signature = 'app:rename-item {item_id} {name}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Make an item';
+    protected $description = 'Rename an item';
     /** @var Catalog */
 
     private $catalog;
@@ -56,11 +57,17 @@ class MakeItem extends Command
 
             yield $connection->connectAsync();
 
-            $itemId = ItemId::generate();
+            $itemId = ItemId::fromString($this->argument('item_id'));
             $name = Name::fromString($this->argument('name'));
-            $item = Item::create($itemId, $name);
+
+            /** @var Item $item */
+            $item = yield $this->catalog->getItem($itemId);
 
             $this->info('ItemId: ' . $itemId);
+            $this->info('Old name: ' . $item->name());
+            $this->info('New name: ' . $name);
+
+            $item->rename($name);
 
             yield $this->catalog->saveItem($item);
 
