@@ -3,9 +3,9 @@
 namespace Astrocasts\Stocker\EventSourcing;
 
 use Astrocasts\Stocker\Serialization\JsonSerializer;
-use Prooph\EventStoreClient\EventData;
-use Prooph\EventStoreClient\EventId;
-use Prooph\EventStoreClient\ResolvedEvent;
+use Prooph\EventStore\EventData;
+use Prooph\EventStore\EventId;
+use Prooph\EventStore\ResolvedEvent;
 
 class MessageTransformer
 {

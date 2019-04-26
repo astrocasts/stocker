@@ -6,11 +6,11 @@ use Astrocasts\Stocker\Infrastructure\Persistence\EventStore\CatalogEventStoreRe
 use Astrocasts\Stocker\Model\Catalog\Catalog;
 use Astrocasts\Stocker\Model\Catalog\Item;
 use Illuminate\Support\ServiceProvider;
+use Prooph\EventStore\Async\EventStoreConnection;
+use Prooph\EventStore\EndPoint;
+use Prooph\EventStore\UserCredentials;
 use Prooph\EventStoreClient\ConnectionSettingsBuilder;
-use Prooph\EventStoreClient\EndPoint;
-use Prooph\EventStoreClient\EventStoreConnection;
 use Prooph\EventStoreClient\EventStoreConnectionFactory;
-use Prooph\EventStoreClient\UserCredentials;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,8 +26,6 @@ class AppServiceProvider extends ServiceProvider
             $builder = new ConnectionSettingsBuilder();
             //$builder->enableVerboseLogging();
             $builder->useConsoleLogger();
-            //$builder->useSslConnection('127.0.0.1', false);
-            //$builder->performOnAnyNode();
             $builder->setDefaultUserCredentials(new UserCredentials('astrocasts', 'password'));
 
             return EventStoreConnectionFactory::createFromEndPoint(

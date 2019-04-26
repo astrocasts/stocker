@@ -9,7 +9,7 @@ use Astrocasts\Stocker\Model\Catalog\Item;
 use Astrocasts\Stocker\Model\Catalog\ItemId;
 use Astrocasts\Stocker\Model\Catalog\Name;
 use Illuminate\Console\Command;
-use Prooph\EventStoreClient\EventStoreConnection;
+use Prooph\EventStore\Async\EventStoreConnection;
 
 class RenameItem extends Command
 {

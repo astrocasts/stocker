@@ -6,15 +6,14 @@ use Amp\Loop;
 use Amp\Promise;
 use Amp\Success;
 use Illuminate\Console\Command;
-use Prooph\EventStore\EventStoreCatchUpSubscription;
-use Prooph\EventStore\LiveProcessingStartedOnCatchUpSubscription;
-use Prooph\EventStoreClient\CatchUpSubscriptionDropped;
-use Prooph\EventStoreClient\CatchUpSubscriptionSettings;
-use Prooph\EventStoreClient\EventAppearedOnCatchupSubscription;
-use Prooph\EventStoreClient\EventStoreConnection;
-use Prooph\EventStoreClient\ResolvedEvent;
-use Prooph\EventStoreClient\SubscriptionDropReason;
-use Prooph\EventStoreClient\UserCredentials;
+use Prooph\EventStore\Async\CatchUpSubscriptionDropped;
+use Prooph\EventStore\Async\EventAppearedOnCatchupSubscription;
+use Prooph\EventStore\Async\EventStoreCatchUpSubscription;
+use Prooph\EventStore\Async\EventStoreConnection;
+use Prooph\EventStore\CatchUpSubscriptionSettings;
+use Prooph\EventStore\ResolvedEvent;
+use Prooph\EventStore\SubscriptionDropReason;
+use Prooph\EventStore\UserCredentials;
 
 class Subscribe extends Command
 {
@@ -66,7 +65,7 @@ class Subscribe extends Command
                 new class() implements EventAppearedOnCatchupSubscription
                 {
                     public function __invoke(
-                        \Prooph\EventStoreClient\Internal\EventStoreCatchUpSubscription $subscription,
+                        EventStoreCatchUpSubscription $subscription,
                         ResolvedEvent $resolvedEvent
                     ): Promise {
                         echo 'incoming event: ' . $resolvedEvent->originalEventNumber(
@@ -86,7 +85,7 @@ class Subscribe extends Command
                 new class() implements CatchUpSubscriptionDropped
                 {
                     public function __invoke(
-                        \Prooph\EventStoreClient\Internal\EventStoreCatchUpSubscription $subscription,
+                        EventStoreCatchUpSubscription $subscription,
                         SubscriptionDropReason $reason,
                         ?\Throwable $exception = null
                     ): void {

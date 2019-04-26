@@ -7,7 +7,7 @@ use Astrocasts\Stocker\Model\Catalog\Catalog;
 use Astrocasts\Stocker\Model\Catalog\Item;
 use Astrocasts\Stocker\Model\Catalog\ItemId;
 use Illuminate\Console\Command;
-use Prooph\EventStoreClient\EventStoreConnection;
+use Prooph\EventStore\Async\EventStoreConnection;
 
 class GetItem extends Command
 {

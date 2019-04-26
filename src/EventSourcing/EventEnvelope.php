@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Astrocasts\Stocker\EventSourcing;
 
-use Prooph\EventStoreClient\EventId;
+use Prooph\EventStore\EventId;
 
 final class EventEnvelope
 {

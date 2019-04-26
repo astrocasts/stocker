@@ -4,14 +4,14 @@ namespace Astrocasts\Stocker\EventSourcing;
 
 use Amp\Promise;
 use Amp\Success;
-use Prooph\EventStoreClient\EventStoreConnection;
-use Prooph\EventStoreClient\ExpectedVersion;
-use Prooph\EventStoreClient\Internal\Consts;
-use Prooph\EventStoreClient\SliceReadStatus;
-use Prooph\EventStoreClient\StreamEventsSlice;
-use Prooph\EventStoreClient\UserCredentials;
 use function Amp\call;
-use Prooph\EventStoreClient\WriteResult;
+use Prooph\EventStore\Async\EventStoreConnection;
+use Prooph\EventStore\ExpectedVersion;
+use Prooph\EventStore\Internal\Consts;
+use Prooph\EventStore\SliceReadStatus;
+use Prooph\EventStore\StreamEventsSlice;
+use Prooph\EventStore\UserCredentials;
+use Prooph\EventStore\WriteResult;
 
 class AggregateRepository
 {

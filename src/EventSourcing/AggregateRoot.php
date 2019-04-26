@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Astrocasts\Stocker\EventSourcing;
 
-use Prooph\EventStoreClient\ExpectedVersion;
+use Prooph\EventStore\ExpectedVersion;
 
 abstract class AggregateRoot
 {
