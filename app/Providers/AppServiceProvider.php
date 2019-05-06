@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
             $builder = new ConnectionSettingsBuilder();
             //$builder->enableVerboseLogging();
             $builder->useConsoleLogger();
-            $builder->setDefaultUserCredentials(new UserCredentials('astrocasts', 'password'));
+            $builder->setDefaultUserCredentials(new UserCredentials('admin', 'changeit'));
 
             return EventStoreConnectionFactory::createFromEndPoint(
                 new EndPoint('127.0.0.1', 1113),

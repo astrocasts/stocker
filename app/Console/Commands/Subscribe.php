@@ -10,7 +10,9 @@ use Prooph\EventStore\Async\CatchUpSubscriptionDropped;
 use Prooph\EventStore\Async\EventAppearedOnCatchupSubscription;
 use Prooph\EventStore\Async\EventStoreCatchUpSubscription;
 use Prooph\EventStore\Async\EventStoreConnection;
+use Prooph\EventStore\Async\LiveProcessingStartedOnCatchUpSubscription;
 use Prooph\EventStore\CatchUpSubscriptionSettings;
+use Prooph\EventStore\Position;
 use Prooph\EventStore\ResolvedEvent;
 use Prooph\EventStore\SubscriptionDropReason;
 use Prooph\EventStore\UserCredentials;
@@ -60,7 +62,8 @@ class Subscribe extends Command
             yield $connection->connectAsync();
 
             yield $connection->subscribeToAllFromAsync(
-                null,
+                //Position::parse('00000000069e594500000000069e5945'),
+                Position::start(),
                 CatchUpSubscriptionSettings::default(),
                 new class() implements EventAppearedOnCatchupSubscription
                 {
@@ -70,18 +73,18 @@ class Subscribe extends Command
                     ): Promise {
                         echo 'incoming event: ' . $resolvedEvent->originalEventNumber(
                             ) . '@' . $resolvedEvent->originalStreamName() . PHP_EOL;
-                        echo 'data: ' . $resolvedEvent->originalEvent()->data() . PHP_EOL;
+                        echo 'Position: ' . $resolvedEvent->originalPosition()->asString()."\n";
+                        //echo 'data: ' . $resolvedEvent->originalEvent()->data() . PHP_EOL;
                         return new Success();
                     }
                 },
-                //new class() implements LiveProcessingStartedOnCatchUpSubscription
-                //{
-                //    public function __invoke(EventStoreCatchUpSubscription $subscription): void
-                //    {
-                //        echo 'liveProcessingStarted on ' . $subscription->streamId() . PHP_EOL;
-                //    }
-                //},
-                null,
+                new class() implements LiveProcessingStartedOnCatchUpSubscription
+                {
+                    public function __invoke(EventStoreCatchUpSubscription $subscription): void
+                    {
+                        echo 'liveProcessingStarted on ' . $subscription->streamId() . PHP_EOL;
+                    }
+                },
                 new class() implements CatchUpSubscriptionDropped
                 {
                     public function __invoke(
@@ -94,8 +97,7 @@ class Subscribe extends Command
                             echo 'ex: ' . $exception->getMessage() . PHP_EOL;
                         }
                     }
-                },
-                new UserCredentials('admin', 'changeit')
+                }
             );
         });
 
